@@ -1,6 +1,9 @@
 from flask import Flask, session, redirect, url_for, escape, request, render_template
 from simplepam import authenticate
 
+DEFAULT_PORT = 5000
+ADDITIVE_FOR_UID = 1000
+
 
 app = Flask(__name__)
 
@@ -48,4 +51,4 @@ def logout():
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 if __name__ == '__main__':
-    app.run(debug='True')
+    app.run(port=getuid() + ADDITIVE_FOR_UID, debug=True)

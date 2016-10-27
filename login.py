@@ -1,15 +1,6 @@
 from flask import Flask, session, redirect, url_for, escape, request, render_template
 from simplepam import authenticate
 
-DEFAULT_PORT = 5000
-ADDITIVE_FOR_UID = 1000
-
-try:
-    from os import getuid
-
-except ImportError:
-    def getuid():
-        return DEFAULT_PORT - ADDITIVE_FOR_UID
 
 
 app = Flask(__name__)
@@ -24,7 +15,8 @@ def index():
         password = request.form['password']
         if authenticate(str(username), str(password)):
             session['username'] = request.form['username']
-            return 'DADADA BICH'
+            return render_template('sassy.html', item = escape(session['username']))
+        return 'NOOO'
     else:
         if 'username' in session:
             return render_template('sassy.html', item = escape(session['username']))
@@ -58,4 +50,4 @@ def logout():
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 if __name__ == '__main__':
-    app.run(port=getuid() + ADDITIVE_FOR_UID, debug=True)
+    app.run(debug='True')
